@@ -1,46 +1,35 @@
 from random import randint
 
-board = []
+turn = 0
+l = []
 
-def creating_board():
+for x in range(5):
+    l.append(["SEA|"] * 5)
 
-    row = input("Give the number of rows: ")
-    col = input("Give the number of columns: ")
+def grid(l):
+    for row in l: 
+        print((" ").join(row))
+grid(l)
 
-    for i in range(int(row)):
-        rows = []
-        board.append(rows)
-        for j in range(int(col)):
-            rows.append("SEA|")
-    for rows in board:
-        print("".join(rows))
+row2 = randint(0, 4)
+col = randint(0, len(l[0]) - 1)
+print(row2, col)
 
-    x = randint(0,int(row) - 1)
-    y = randint(0,int(col) - 1)
-    
-    ship = "SHP|"
-    board[int(x)][int(y)] = ship
-   
-def targeting():
-
-    turn = 0
-
-    while turn <=5:
+while turn <= 5:
+    r = int(input("ROW: "))
+    c = int(input("COL: "))
+    if r == row2 and c == col:
+        print("HIT! YOU SANK MY SHIP!")
+        break
+    elif turn == 5:
+        print("MISS! LOSER!")
+        l[row2][col] = "SHP|"
+        print("Exit")
+        break
+    else:
+        print("MISS! TRY AGAIN!")
+        print(r,c , row2 , col)
+        l[int(r)][int(c)] = "XXX|"
+        for row in l:
+            print((" ").join(row))
         turn += 1
-        x = input("Give the 'x' coordinate: ")
-        y = input("Give the 'y' coordinate: ")
-
-        if board[int(x) - 1][int(y) - 1] == "SHP|":
-            print("hit")
-            board[int(x) - 1][int(y) - 1] = "HIT|"
-            for rows in board:
-                print("".join(rows))
-            break
-        else:
-            print("miss")
-            board[int(x) - 1][int(y) - 1] = "MIS|"
-            for rows in board:
-                print("".join(rows))
-
-creating_board()
-targeting()
