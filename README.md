@@ -1,16 +1,40 @@
-import copy
-import random
-horiz = ['  A  ','  B  ','  C  ','  D  ','  E  ','  F  ','  G  ','  H  ','  I  ','  J  ','  K  ']
-str1 = ''.join(horiz)
-vert = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-board_size = int(input("What size of game board? "))
-def print_horiz_line():
-    print(" ___ " * board_size)
-def print_vert_line():
-    print("|    " * (board_size + 1))
-print(str1[:board_size * 5])
-#print(vert[:board_size])
-for index in range(board_size):
-    print_horiz_line()
-    print_vert_line()
-print_horiz_line()
+from random import randint
+
+l = []
+
+for x in range(5):
+    l.append(["SEA|"] * 5)
+
+def grid(l):
+    for row in l: 
+        print((" ").join(row))
+grid(l)
+
+row = randint(0, 4)
+col = randint(0, len(l[0]) - 1)
+print(row, col)
+
+for i in range(4):
+    r = int(input("ROW: "))
+    c = int(input("COL: "))
+    if r == row and c == col:
+        print("HIT! YOU SANK MY SHIP!")
+        break
+    else:
+        print("MISS! TRY AGAIN!")
+        l[int(r)][int(c)] = "XXX|"
+        for row in l:
+            print((" ").join(row))
+        
+for i in range(1):
+    r = int(input("ROW: "))
+    c = int(input("COL: "))
+    if r == row and c == col:
+        print("HIT! YOU SANK MY SHIP!")
+        l[int(r)][int(c)] = "HIT|"
+        break
+    else:
+        print("MISS! LOSER!")
+        l[row][col] = "SHP|"
+        print("Exit")
+        break
