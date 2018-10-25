@@ -1,46 +1,41 @@
 from random import randint
 
-board = []
+turn = 0
+l = []
 
-def creating_board():
+for x in range(5):
+    l.append(['\x1b[0;37;44m' + 'SEA|' + '\x1b[0m'] * 5)
 
-    row = input("Give the number of rows: ")
-    col = input("Give the number of columns: ")
+def grid(l):
+    for row in l: 
+        print((" ").join(row))
+grid(l)
 
-    for i in range(int(row)):
-        rows = []
-        board.append(rows)
-        for j in range(int(col)):
-            rows.append("SEA|")
-    for rows in board:
-        print("".join(rows))
+row2 = randint(0, 4)
+col = randint(0, len(l[0]) - 1)
+print(row2, col)
 
-    x = randint(0,int(row) - 1)
-    y = randint(0,int(col) - 1)
-    
-    ship = "SHP|"
-    board[int(x)][int(y)] = ship
-   
-def targeting():
-
-    turn = 0
-
-    while turn <=5:
+while turn <= 5:
+    r = int(input("ROW: "))
+    c = int(input("COL: "))
+    if int(r) -1 == row2 and int(c) -1 == col:
+        print('\x1b[6;30;42m' + 'HIT! YOU SANK MY SHIP!' + '\x1b[0m')
+        print('\x1b[6;30;42m' + 'CONGRATS! YOU WON!' + '\x1b[0m')
+        l[int(row2)][int(col)] = ('\x1b[6;30;42m' + 'HIT|' + '\x1b[0m')
+        for row in l:
+            print((" ").join(row))
+        print("Exit")
+        break
+    elif turn == 5:
+        print('\x1b[0;37;41m' + 'MISS! LOSER!' + '\x1b[0m')
+        l[int(row2)][int(col)] = ('\x1b[1;30;47m' + 'SHP|' + '\x1b[0m')
+        for row2 in l: 
+            print((" ").join(row2))
+        print("Exit")
+        break
+    else:
+        print('\x1b[0;37;41m' + 'MISS! TRY AGAIN!' + '\x1b[0m')
+        l[int(r) - 1][int(c) - 1] = ('\x1b[0;37;41m' + '_X_|' + '\x1b[0m')
+        for row in l:
+            print((" ").join(row))
         turn += 1
-        x = input("Give the 'x' coordinate: ")
-        y = input("Give the 'y' coordinate: ")
-
-        if board[int(x) - 1][int(y) - 1] == "SHP|":
-            print("hit")
-            board[int(x) - 1][int(y) - 1] = "HIT|"
-            for rows in board:
-                print("".join(rows))
-            break
-        else:
-            print("miss")
-            board[int(x) - 1][int(y) - 1] = "MIS|"
-            for rows in board:
-                print("".join(rows))
-
-creating_board()
-targeting()
